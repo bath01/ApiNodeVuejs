@@ -1,0 +1,87 @@
+<template>
+    <div class="container">
+      <div class="col-md-7 col-lg-8">
+        <h4 class="mb-3">Enregister un étudiant</h4>
+        <form @submit.prevent="submit" class="needs-validation" novalidate>
+          <div class="row g-3">
+            <div class="col-12">
+              <label for="address" class="form-label">Matricule</label>
+              <input type="text" v-model="data.Matricule" class="form-control"   placeholder="Mat" required>
+              <div class="invalid-feedback">
+                Entrer Un matricule valide
+              </div>
+            </div>
+            <div class="col-12">
+              <label for="firstName" class="form-label">Nom </label>
+              <input type="text" v-model="data.Nom" class="form-control"  placeholder="Nom"  required>
+              <div class="invalid-feedback">
+                Un nom de famille valide est requis.
+              </div>
+            </div>
+
+            <div class="col-12">
+              <label for="firstName" class="form-label">Prénom </label>
+              <input type="text" v-model="data.Prenoms" class="form-control"  placeholder="Prénom"  required>
+              <div class="invalid-feedback">
+                Un nom de famille valide est requis.
+              </div>
+            </div>
+            <div class="col-12">
+              <label for="lastName" class="form-label">Date de naissance</label>
+              <input type="text" v-model="data.DateNaissance" class="form-control"  placeholder="YYYY-MM-DD"  required>
+              <div class="invalid-feedback">
+
+                Un niveeu valide est requis.
+
+              </div>
+            </div>
+
+            <div class="col-12">
+              <label for="lastName" class="form-label">Niveau</label>
+              <input type="text" v-model="data.Niveau" class="form-control"  placeholder="Niveau"  required>
+              <div class="invalid-feedback">
+
+                Un niveeu valide est requis.
+
+              </div>
+            </div>
+
+          </div>
+          <hr class="my-4">
+          <button class="w-100 btn btn-primary btn-lg" type="submit">Enregistrer</button>
+        </form>
+      </div>
+    </div>
+</template>
+
+<script>
+
+import {reactive} from 'vue'; 
+export default {
+    name: "EnregistrerView",
+    setup(){
+        const data = reactive({
+            Matricule: '',
+            Nom: '',
+            Prenoms:'',
+           DateNaissance:'',
+            Niveau:''
+
+        });
+        const submit= async() =>{
+            await fetch('http://localhost:9200/api/', {
+               method: 'POST',
+               headers: {'Content-Type': 'application/json'},
+               body: JSON.stringify(data)
+            });
+            console.log(data);
+        }
+        return{
+            data,
+            submit
+        }
+ 
+    }
+}
+</script>
+

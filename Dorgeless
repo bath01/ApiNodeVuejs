@@ -1,0 +1,52 @@
+<template>
+
+    <div class="container">
+        <div class="col-md-7 col-lg-8">
+        <h4 class="mb-3">Supprimer un étudiant</h4>
+        <hr class="my-4">
+        <form @submit.prevent="soumettre" class="needs-validation" novalidate>
+               
+               <div class="col-12">
+                   <label for="address" class="form-label">Entrer le matricle de l'étudiant</label>
+                   <input type="text" v-model="id.Mat" class="form-control" placeholder="Matricule" required>
+                   <div class="invalid-feedback">
+                       Entrer Un matricule valide
+                   </div>
+               
+           </div><br>
+           <hr class="my-4">
+           <button class="w-100 btn btn-primary btn-lg" type="submit">Supprimer</button>
+       </form>
+        </div>
+    </div> 
+
+</template>
+
+
+
+<script>
+
+import {reactive} from 'vue'; 
+export default {
+
+    name: "SupprimerView",
+   setup(){
+      const id = reactive({
+           Mat: ''  
+
+        });
+        console.log(id);
+        const soumettre= async() =>{
+            await fetch('http://localhost:9200/api/id/'+ id.Mat, {
+               method: 'DELETE',
+            });
+
+       }
+       return{
+            id,
+            soumettre
+           
+        }
+  }
+} 
+</script>
